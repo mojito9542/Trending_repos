@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="8"
+    tools:context="com.mrproducts.www.trending_repo.MainActivity">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="@drawable/name"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="The Trending Repos on GitHub"
+        android:textStyle="bold"
+        android:textSize="22dp"
+        android:gravity="center"
+        android:textColor="#000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textColor="#000"
+        android:layout_weight="1"
+        android:text="Sort by Time :"
+        android:gravity="bottom"
+        android:layout_marginLeft="20dp"
+        android:textSize="20dp"/>
+    <Spinner
+        android:id="@+id/sp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/ract"
+        android:layout_marginHorizontal="20dp" />
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#000"
+        android:textColor="#fff"
+        android:text="Get Repos"
+        android:textSize="18dp"
+        android:layout_marginHorizontal="30dp"
+       android:layout_marginTop="80dp"/>
+
+</LinearLayout>

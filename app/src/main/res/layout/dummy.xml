@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:weightSum="3"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:background="@drawable/ract"
+        >
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="35dp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="15dp"
+            android:textStyle="italic"
+            android:textAlignment="center"/>
+
+        <Button
+            android:id="@+id/go"
+            android:layout_marginHorizontal="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#000"
+            android:text="Visit Repo"
+            android:textSize="17dp"
+            android:textColor="#fff"/>
+
+
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>
