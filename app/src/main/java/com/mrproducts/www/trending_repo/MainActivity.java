@@ -10,6 +10,7 @@ import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
     static String nk[],ra[];
+    final private static String EXTRA_SPINNER_OPTION = "SPINNER_OPTION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +30,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this,Repos.class);
                 String st = spinner.getSelectedItem().toString().trim();
                 if(st.equals(spinnerOptionList[0]))
-                    intent.putExtra("go","today");
+                    intent.putExtra(EXTRA_SPINNER_OPTION,"today");
                else if(st.equals(spinnerOptionList[1]))
-                    intent.putExtra("go","weekly");
+                    intent.putExtra(EXTRA_SPINNER_OPTION,"weekly");
                 else
-                    intent.putExtra("go","monthly");
+                    intent.putExtra(EXTRA_SPINNER_OPTION,"monthly");
                 startActivity(intent);
             }
         });
