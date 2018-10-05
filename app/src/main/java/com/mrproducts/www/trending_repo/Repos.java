@@ -1,29 +1,28 @@
 package com.mrproducts.www.trending_repo;
 
-import android.app.ActionBar;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static com.mrproducts.www.trending_repo.MainActivity.nk;
 import static com.mrproducts.www.trending_repo.MainActivity.ra;
 
 public class Repos extends AppCompatActivity {
+    final private static String EXTRA_SPINNER_OPTION = "SPINNER_OPTION";
     public ListView rl;
     public ArrayList<ListData> myList = new ArrayList<ListData>();
+    private ProgressBar progress;
     MyBaseAdapter adapter;
-   String web;
+    String web;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,11 +30,13 @@ public class Repos extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         String l = "";
         rl = (ListView) findViewById(R.id.rl);
+        progress = (ProgressBar) findViewById(R.id.progress);
         adapter = new MyBaseAdapter(getApplicationContext(), myList);
+        showProgress();
         rl.setAdapter(adapter);
         if (bundle != null)
-            l = bundle.getString("go");
-        TextView tt = findViewById(R.id.tt);
+            l = bundle.getString(EXTRA_SPINNER_OPTION);
+        TextView tt = findViewById(R.id.timeSelected);
         String t = "";
         if (l.equals("today"))
             t = "Today";
@@ -85,6 +86,7 @@ public class Repos extends AppCompatActivity {
                             ld.setDesc(ra[i]);
                             myList.add(ld);
                         }
+                        hideProgress();
                         ((BaseAdapter)rl.getAdapter()).notifyDataSetChanged();
                     }
                 });
@@ -94,5 +96,12 @@ public class Repos extends AppCompatActivity {
             }
 
 
+    private void hideProgress(){
+        progress.setVisibility(View.GONE);
     }
+    private void showProgress(){
+        progress.setVisibility(View.VISIBLE);
+    }
+
+}
 
