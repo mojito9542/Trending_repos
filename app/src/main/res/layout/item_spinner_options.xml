@@ -9,6 +9,6 @@
         android:textSize="20sp"
         android:textColor="#000"
     android:gravity="center_vertical"
-    android:paddingStart="5dp" />
+    android:paddingStart="5dp"/>
 
 
