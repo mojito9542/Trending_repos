@@ -4,4 +4,5 @@
     <string name="sort_by_time_textview">Sort by Time :</string>
     <string name="search_repositories_button_text">Search Repositories</string>
     <string name="content_description_logo_of_the_project">Logo of the project</string>
+    <string name="btn_text_repo">visit repo</string>
 </resources>
