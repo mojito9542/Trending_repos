@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,Repos.class);
+                Intent intent = new Intent(MainActivity.this,RepositoryActivity.class);
                 String st = spinner.getSelectedItem().toString().trim();
                 if(st.equals(spinnerOptionList[0]))
                     intent.putExtra(EXTRA_SPINNER_OPTION,"today");

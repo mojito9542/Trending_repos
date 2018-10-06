@@ -2,9 +2,9 @@ package com.mrproducts.www.trending_repo;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import org.jsoup.Jsoup;
@@ -16,37 +16,50 @@ import java.util.ArrayList;
 import static com.mrproducts.www.trending_repo.MainActivity.nk;
 import static com.mrproducts.www.trending_repo.MainActivity.ra;
 
-public class Repos extends AppCompatActivity {
+public class RepositoryActivity extends AppCompatActivity {
     final private static String EXTRA_SPINNER_OPTION = "SPINNER_OPTION";
-    public ListView rl;
-    public ArrayList<ListData> myList = new ArrayList<ListData>();
+    private RecyclerView recyclerViewRepositories;
+    private RepositoryListAdapter adapter;
+    private ArrayList<Repository> repositories = new ArrayList<Repository>();
     private ProgressBar progress;
-    MyBaseAdapter adapter;
     String web;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repos);
-        Bundle bundle = getIntent().getExtras();
-        String l = "";
-        rl = (ListView) findViewById(R.id.rl);
-        progress = (ProgressBar) findViewById(R.id.progress);
-        adapter = new MyBaseAdapter(getApplicationContext(), myList);
+
+        recyclerViewRepositories = findViewById(R.id.repositoriesRecyclerView);
+        progress = findViewById(R.id.progress);
+        adapter = new RepositoryListAdapter();
+
         showProgress();
-        rl.setAdapter(adapter);
+        setupRecycleView();
+        loadData();
+    }
+
+    private void setupRecycleView(){
+        recyclerViewRepositories.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewRepositories.setAdapter(adapter);
+    }
+
+    private void loadData(){
+        Bundle bundle = getIntent().getExtras();
+        String selectedTimeOption = "";
+
         if (bundle != null)
-            l = bundle.getString(EXTRA_SPINNER_OPTION);
+            selectedTimeOption = bundle.getString(EXTRA_SPINNER_OPTION);
         TextView tt = findViewById(R.id.timeSelected);
         String t = "";
-        if (l.equals("today"))
+        if (selectedTimeOption.equals("today"))
             t = "Today";
-        else if (l.equals("weekly"))
+        else if (selectedTimeOption.equals("weekly"))
             t = "This Week";
         else
             t = "This Month";
 
         tt.setText(t);
-        web = "https://github.com/trending?since=" + l;
+        web = "https://github.com/trending?since=" + selectedTimeOption;
         Thread th = new Thread(){
             @Override
             public void run() {
@@ -68,7 +81,6 @@ public class Repos extends AppCompatActivity {
 
                 }
 
-
                 catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -76,24 +88,18 @@ public class Repos extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        int l=nk.length;
-                        System.out.print(l);
-                        for(int i=0;i<nk.length;i++)
-                        {
-                            ListData ld = new ListData();
-                            ld.setLink("https://github.com" + nk[i]);
-                            ld.setName(nk[i]);
-                            ld.setDesc(ra[i]);
-                            myList.add(ld);
+                        for(int i=0;i<nk.length;i++) {
+                            Repository ld = new Repository(nk[i], "https://github.com" + nk[i] ,ra[i]);
+                            repositories.add(ld);
                         }
                         hideProgress();
-                        ((BaseAdapter)rl.getAdapter()).notifyDataSetChanged();
+                        adapter.update(repositories);
                     }
                 });
             }
         };
         th.start();
-            }
+    }
 
 
     private void hideProgress(){
