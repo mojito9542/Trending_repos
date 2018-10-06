@@ -1,4 +1,4 @@
-package com.mrproducts.www.trending_repo;
+package com.mrproducts.www.trending_repo.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.mrproducts.www.trending_repo.R;
+import com.mrproducts.www.trending_repo.model.TrendingRepo;
 
 import java.util.List;
 
@@ -15,9 +18,9 @@ import butterknife.ButterKnife;
 public class TrendingReposAdapter extends RecyclerView.Adapter<TrendingReposAdapter.TrendingReposViewHolder> {
 
     private Context context;
-    private List<ListData> repos;
+    private List<TrendingRepo> repos;
 
-    public TrendingReposAdapter(Context context, List<ListData> repos) {
+    public TrendingReposAdapter(Context context, List<TrendingRepo> repos) {
         this.context = context;
         this.repos = repos;
     }
@@ -25,12 +28,12 @@ public class TrendingReposAdapter extends RecyclerView.Adapter<TrendingReposAdap
     @Override
     public TrendingReposViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new TrendingReposViewHolder(LayoutInflater.from(context)
-        .inflate(R.layout.item_repository, parent, false));
+                .inflate(R.layout.item_repository, parent, false));
     }
 
     @Override
     public void onBindViewHolder(TrendingReposViewHolder holder, int position) {
-        ListData repo = repos.get(position);
+        TrendingRepo repo = repos.get(position);
         holder.name.setText(repo.getName());
         holder.desc.setText(repo.getDesc());
         holder.link.setText(repo.getLink());
