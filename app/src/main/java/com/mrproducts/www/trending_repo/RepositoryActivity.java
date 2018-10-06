@@ -7,21 +7,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import java.util.ArrayList;
 
-import static com.mrproducts.www.trending_repo.MainActivity.nk;
-import static com.mrproducts.www.trending_repo.MainActivity.ra;
+import java.util.ArrayList;
 
 public class RepositoryActivity extends AppCompatActivity {
     final private static String EXTRA_SPINNER_OPTION = "SPINNER_OPTION";
+    private static String nk[], ra[];
     private RecyclerView recyclerViewRepositories;
     private RepositoryListAdapter adapter;
-    private ArrayList<Repository> repositories = new ArrayList<Repository>();
+    private ArrayList<Repository> repositories = new ArrayList<>();
     private ProgressBar progress;
+
     String web;
 
     @Override
@@ -38,33 +39,40 @@ public class RepositoryActivity extends AppCompatActivity {
         loadData();
     }
 
-    private void setupRecycleView(){
+    private void setupRecycleView() {
         recyclerViewRepositories.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewRepositories.setAdapter(adapter);
     }
 
-    private void loadData(){
+    private void loadData() {
         Bundle bundle = getIntent().getExtras();
         String selectedTimeOption = "";
 
         if (bundle != null)
             selectedTimeOption = bundle.getString(EXTRA_SPINNER_OPTION);
         TextView tt = findViewById(R.id.timeSelected);
-        String t = "";
-        if (selectedTimeOption.equals("today"))
-            t = "Today";
-        else if (selectedTimeOption.equals("weekly"))
-            t = "This Week";
-        else
-            t = "This Month";
+        String time;
 
-        tt.setText(t);
+        assert selectedTimeOption != null;
+        switch (selectedTimeOption) {
+            case "today":
+                time = "Today";
+                break;
+            case "weekly":
+                time = "This Week";
+                break;
+            default:
+                time = "This Month";
+                break;
+        }
+
+        tt.setText(time);
         web = "https://github.com/trending?since=" + selectedTimeOption;
-        Thread th = new Thread(){
+        Thread th = new Thread() {
             @Override
             public void run() {
                 try {
-                    Document doc =  Jsoup
+                    Document doc = Jsoup
                             .connect(web)
                             .userAgent("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36")
                             .get();
@@ -72,24 +80,22 @@ public class RepositoryActivity extends AppCompatActivity {
                     Elements links = content.getElementsByTag("li");
                     nk = new String[links.size()];
                     ra = new String[links.size()];
-                    int i=0;
+                    int i = 0;
                     for (Element link : links) {
-                        nk[i]= link.getElementsByTag("a").first().attr("href");
-                        ra[i]= link.getElementsByTag("p").first().text();
+                        nk[i] = link.getElementsByTag("a").first().attr("href");
+                        ra[i] = link.getElementsByTag("p").first().text();
                         i++;
                     }
 
-                }
-
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        for(int i=0;i<nk.length;i++) {
-                            Repository ld = new Repository(nk[i], "https://github.com" + nk[i] ,ra[i]);
+                        for (int i = 0; i < nk.length; i++) {
+                            Repository ld = new Repository(nk[i], "https://github.com" + nk[i], ra[i]);
                             repositories.add(ld);
                         }
                         hideProgress();
@@ -102,10 +108,11 @@ public class RepositoryActivity extends AppCompatActivity {
     }
 
 
-    private void hideProgress(){
+    private void hideProgress() {
         progress.setVisibility(View.GONE);
     }
-    private void showProgress(){
+
+    private void showProgress() {
         progress.setVisibility(View.VISIBLE);
     }
 

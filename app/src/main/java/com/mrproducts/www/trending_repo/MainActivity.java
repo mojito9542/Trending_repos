@@ -9,33 +9,34 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
-    static String nk[],ra[];
+
     final private static String EXTRA_SPINNER_OPTION = "SPINNER_OPTION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final String[] spinnerOptionList = {"Today","This Week","This Month"};
-        final Spinner spinner =findViewById(R.id.timeSortSpinner);
-        ArrayAdapter a = new ArrayAdapter(this,R.layout.item_spinner_options, spinnerOptionList);
-        a.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(a);
+        final String[] spinnerOptionList = {"Today", "This Week", "This Month"};
+        final Spinner spinner = findViewById(R.id.timeSortSpinner);
 
-        Button btn= (Button) findViewById(R.id.searchReposButton);
-        btn.setOnClickListener(new View.OnClickListener() {
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, R.layout.item_spinner_options, spinnerOptionList);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
+
+        Button btnSearchRepository = findViewById(R.id.searchReposButton);
+        btnSearchRepository.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,RepositoryActivity.class);
-                String st = spinner.getSelectedItem().toString().trim();
-                if(st.equals(spinnerOptionList[0]))
-                    intent.putExtra(EXTRA_SPINNER_OPTION,"today");
-               else if(st.equals(spinnerOptionList[1]))
-                    intent.putExtra(EXTRA_SPINNER_OPTION,"weekly");
+                Intent repository = new Intent(MainActivity.this, RepositoryActivity.class);
+                String strTime = spinner.getSelectedItem().toString().trim();
+                if (strTime.equals(spinnerOptionList[0]))
+                    repository.putExtra(EXTRA_SPINNER_OPTION, "today");
+                else if (strTime.equals(spinnerOptionList[1]))
+                    repository.putExtra(EXTRA_SPINNER_OPTION, "weekly");
                 else
-                    intent.putExtra(EXTRA_SPINNER_OPTION,"monthly");
-                startActivity(intent);
+                    repository.putExtra(EXTRA_SPINNER_OPTION, "monthly");
+                startActivity(repository);
             }
         });
 
