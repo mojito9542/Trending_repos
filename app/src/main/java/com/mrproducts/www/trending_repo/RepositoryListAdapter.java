@@ -12,7 +12,7 @@ import java.util.List;
 
 public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAdapter.RepositoryViewHolder> {
 
-    private List<Repository> repositoryList = new ArrayList<Repository>();
+    private List<Repository> repositoryList = new ArrayList<>();
 
     @NonNull
     @Override
@@ -31,7 +31,7 @@ public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAd
         return repositoryList.size();
     }
 
-    public void update(List<Repository> data){
+    void update(List<Repository> data){
         repositoryList.clear();
         repositoryList.addAll(data);
         notifyDataSetChanged();
