@@ -1,11 +1,11 @@
-package com.mrproducts.www.trending_repo;
+package com.mrproducts.www.trending_repo.model;
 
 /*
- * ListData class will hold data for displaying in ListView
+ * TrendingRepo class will hold data for displaying in RecyclerView
  * */
-public class ListData {
+public class TrendingRepo {
 
-    String name,link,desc;
+    private String name,link,desc;
 
     public String getLink() {
         return link;
