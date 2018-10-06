@@ -11,7 +11,11 @@ import java.util.List;
 
 public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAdapter.RepositoryViewHolder> {
 
-    private List<Repository> repositoryList = new ArrayList<Repository>();
+    private List<Repository> repositoryList;
+
+    public RepositoryListAdapter(List<Repository> repositoryList) {
+        this.repositoryList = repositoryList;
+    }
 
     @Override
     public RepositoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -29,21 +33,18 @@ public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAd
         return repositoryList.size();
     }
 
-    public void update(List<Repository> data){
-        repositoryList.clear();
-        repositoryList.addAll(data);
-        notifyDataSetChanged();
-    }
+    class RepositoryViewHolder extends RecyclerView.ViewHolder {
 
-    class RepositoryViewHolder extends RecyclerView.ViewHolder{
+        TextView itemTitle, itemDescription;
 
-        RepositoryViewHolder(View view){
+        RepositoryViewHolder(View view) {
             super(view);
         }
 
-        void bind(Repository repository){
-            TextView itemTitle = itemView.findViewById(R.id.itemTitle);
-            TextView itemDescription = itemView.findViewById(R.id.itemDescription);
+        void bind(Repository repository) {
+            itemTitle = itemView.findViewById(R.id.itemTitle);
+            itemDescription = itemView.findViewById(R.id.itemDescription);
+
             itemTitle.setText(repository.getTitle());
             itemDescription.setText(repository.getDescription());
         }
