@@ -2,6 +2,8 @@ package com.mrproducts.www.trending_repo;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -18,10 +20,10 @@ import static com.mrproducts.www.trending_repo.MainActivity.ra;
 
 public class Repos extends AppCompatActivity {
     final private static String EXTRA_SPINNER_OPTION = "SPINNER_OPTION";
-    public ListView rl;
+    public RecyclerView rl;
     public ArrayList<ListData> myList = new ArrayList<ListData>();
     private ProgressBar progress;
-    MyBaseAdapter adapter;
+    TrendingReposAdapter adapter;
     String web;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +31,10 @@ public class Repos extends AppCompatActivity {
         setContentView(R.layout.activity_repos);
         Bundle bundle = getIntent().getExtras();
         String l = "";
-        rl = (ListView) findViewById(R.id.rl);
+        rl = (RecyclerView) findViewById(R.id.rl);
+        rl.setLayoutManager(new LinearLayoutManager(this));
         progress = (ProgressBar) findViewById(R.id.progress);
-        adapter = new MyBaseAdapter(getApplicationContext(), myList);
+        adapter = new TrendingReposAdapter(getApplicationContext(), myList);
         showProgress();
         rl.setAdapter(adapter);
         if (bundle != null)
@@ -87,7 +90,7 @@ public class Repos extends AppCompatActivity {
                             myList.add(ld);
                         }
                         hideProgress();
-                        ((BaseAdapter)rl.getAdapter()).notifyDataSetChanged();
+                        ((TrendingReposAdapter)rl.getAdapter()).notifyDataSetChanged();
                     }
                 });
             }
